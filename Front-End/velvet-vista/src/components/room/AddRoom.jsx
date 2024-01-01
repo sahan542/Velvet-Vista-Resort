@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { addRoom } from '../utils/ApiFunctions'
+import RoomTypeSelector from '../common/RoomTypeSelector'
 
 const AddRoom = () => {
     const[newRoom, setNewRoom] = useState({
@@ -17,13 +18,13 @@ const AddRoom = () => {
         let value = e.target.value 
         if(name === "roomPrice"){
             if(!isNaN(value)){
-            value.parseInt(value)
+            value = parseInt(value)
             }else{
                 value = ""
             }
 
         }
-        setNewRoom({...newRoom, [name]: value})
+        setNewRoom({...newRoom, [name]: value});
     }
 
     const handleImageChange = (e) =>{
@@ -61,7 +62,11 @@ const AddRoom = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="roomType" className="form-label">Room Type</label>
-                        <div></div>
+                        <div>
+                            <RoomTypeSelector 
+                            handleRoomInputChange={handleRoomInputChange} 
+                            newRoom={newRoom}/>
+                        </div>
                     </div>
 
                     <div className="mb-3">
@@ -95,7 +100,7 @@ const AddRoom = () => {
                         )}
                         
                     </div>
-                    <div className="d-grid d-flex mt-2">
+                    <div className="d-grid d-md-flex mt-2">
                         <button className="btn btn-outline-primary ml-5">Save Room</button>
                     </div>
 
