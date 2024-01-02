@@ -9,7 +9,7 @@ const RoomTypeSelector = ({handleRoomInputChange, newRoom}) => {
     const [showNewRoomTypeInput, setShowNewRoomTypesInput] = useState(false);
     const [newRoomType, setNewRoomType] = useState("");
 
-    useEffect(() => {
+    /*useEffect(() => {
         getRoomTypes().then((data) => {
             if (Array.isArray(data)) {
                 setRoomTypes(data);
@@ -20,6 +20,20 @@ const RoomTypeSelector = ({handleRoomInputChange, newRoom}) => {
         getRoomTypes().catch((error) => {
             console.error("Error fetching room types:", error);
         });
+    }, []);
+    */
+    useEffect(() => {
+        getRoomTypes()
+            .then((data) => {
+                if (Array.isArray(data)) {
+                    setRoomTypes(data);
+                } else {
+                    console.log("Invalid data received from getRoomTypes:", data);
+                }
+            })
+            .catch((error) => {
+                console.error("Error fetching room types:", error);
+            });
     }, []);
 
     const handleNewRoomTypeInputChange = (e) => {
@@ -43,12 +57,12 @@ const RoomTypeSelector = ({handleRoomInputChange, newRoom}) => {
                 id='roomType'
                 name='roomType'
                 value={newRoom.roomType}
-                onChange={(e) =>{
+                onChange={(e) => {
                     if(e.target.value === "Add New"){
-                        setShowNewRoomTypesInput(true)
+                        setShowNewRoomTypesInput(true);
                     }
                     else{
-                        handleRoomInputChange(e)
+                        handleRoomInputChange(e);
                     }
                 }}
                 >
