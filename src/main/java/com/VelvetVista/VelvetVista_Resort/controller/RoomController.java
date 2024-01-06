@@ -9,6 +9,7 @@ import com.VelvetVista.VelvetVista_Resort.service.BookingService;
 import com.VelvetVista.VelvetVista_Resort.service.IRoomService;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +25,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/rooms")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173", allowedHeaders = "*")
 public class RoomController {
 
     private final IRoomService roomService;
@@ -40,6 +41,8 @@ public class RoomController {
         return ResponseEntity.ok(response);
 
     }
+    /*@CrossOrigin(origins = "http://localhost:5173")*/
+
     @GetMapping("/room/types")
     public List<String> getRoomTypes(){
         return roomService.getAllRoomTypes();
@@ -61,15 +64,23 @@ public class RoomController {
         return ResponseEntity.ok(roomResponses);
     }
 
+    @DeleteMapping("/delete/room/{roomId}")
+
+    public ResponseEntity<Void> deleteRoom(@PathVariable Long roomId){
+        roomService.deleteRoom(roomId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
+
     private RoomResponse getRoomResponse(Room room) {
         List<BookedRoom> bookings = getAllBookingsByRoomId(room.getId());
-        List<BookingResponse> bookingInfo = bookings
+      /*  List<BookingResponse> bookingInfo = bookings
                 .stream()
                 .map(booking -> new BookingResponse(
                         booking.getBookingId(),
                         booking.getCheckInDate(),
                         booking.getCheckOutDate(),
-                        booking.getBookingConfirmationCode())).toList();
+                        booking.getBookingConfirmationCode())).toList();   */
         byte[] photoBytes = null;
         Blob photoBlob = room.getPhoto();
         if(photoBlob != null){
@@ -80,7 +91,8 @@ public class RoomController {
                 throw new PhotoRetrievalException("Error Retrieving Photo");
             }
         }
-        return new RoomResponse(room.getId(), room.getRoomType(), room.getRoomPrice(), room.isBooked(), photoBytes, bookingInfo );
+        List<BookingResponse> bookingInfo = null;   //if this not work.please remove this.
+        return new RoomResponse(room.getId(), room.getRoomType(), room.getRoomPrice(), room.isBooked(), photoBytes, bookingInfo); //
     }
 
     private List<BookedRoom> getAllBookingsByRoomId(Long roomId) {
