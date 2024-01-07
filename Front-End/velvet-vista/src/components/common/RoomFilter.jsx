@@ -1,43 +1,46 @@
-import React, { useState } from 'react'
+import React, { useState } from "react"
 
-const RoomFilter = ({data, setFilteredData}) => {
-    const[filter, setFilter] = useState("")
-    const handleSelectChange = (e) => {
-        const selectedRoomType = e.target.value;
-        setFilter(selectedRoomType);
-        
-        const filteredRooms = data.filter((room) =>
-        room.roomType.toLowerCase().includes(selectedRoomType.toLowerCase())
-    );
-            setFilteredData(filteredRooms)
-    }
+const RoomFilter = ({ data, setFilteredData }) => {
+	const [filter, setFilter] = useState("")
 
-    const clearFilter = () => {
-        setFilter("")
-        setFilteredData(data)
-    }
+	const handleSelectChange = (e) => {
+		const selectedType = e.target.value
+		setFilter(selectedType)
 
-    const roomTypes = ["", ...new Set(data.map((room) => room.roomType))]
+		const filteredRooms = data.filter((room) =>
+			room.roomType.toLowerCase().includes(selectedType.toLowerCase())
+		)
+		setFilteredData(filteredRooms)
+	}
 
-  return (
-    <div className="input-group mb-3">
-        <span className="input-group-text" id="room-type-filter">Filter Rooms by Type</span>
-        <select 
-            className="form-select"
-            aria-label="room type filter"
-            value={filter} 
-            onChange={handleSelectChange}>
-                <option value="">Select a room type to filter...</option>
-                {roomTypes.map((type, index) => (
-                    <option key={index} value={String(type)}>
-                        {String(type)}
-                    </option>
-                ))}
+	const clearFilter = () => {
+		setFilter("")
+		setFilteredData(data)
+	}
 
-        </select>
-        <button className="btn btn-hotel" type="button" onClick={clearFilter}>Clear Filter</button>
-    </div>
-  )
+	const roomTypes = ["", ...new Set(data.map((room) => room.roomType))]
+
+	return (
+		<div className="input-group mb-3">
+			<span className="input-group-text" id="room-type-filter">
+				FIlter rooms by type
+			</span>
+			<select
+				className="form-select"
+				aria-label="romm type filter"
+				value={filter}
+				onChange={handleSelectChange}>
+				<option value="">select a room type to filter....</option>
+				{roomTypes.map((type, index) => (
+					<option key={index} value={String(type)}>
+						{String(type)}
+					</option>
+				))}
+			</select>
+			<button className="btn btn-hotel" type="button" onClick={clearFilter}>
+				Clear Filter
+			</button>
+		</div>
+	)
 }
-
 export default RoomFilter
