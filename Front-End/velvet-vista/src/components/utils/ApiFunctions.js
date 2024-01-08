@@ -67,15 +67,14 @@ export async function getAllRooms() {
   }
 
   /*This function Update Room by Id from database */
-  export async function updateRoom(roomId, roomData){
-    const formData = new formData()
-    formData.append("roomType", roomData.roomType)
-    formData.append("roomPrice", roomData.roomPrice)
-    formData.append("photo", roomData.photo)
-
-    const response = await api.put(`/rooms/update/${roomId}`)
-    return response
-  }
+  export async function updateRoom(roomId, roomData) {
+	const formData = new FormData()
+	formData.append("roomType", roomData.roomType)
+	formData.append("roomPrice", roomData.roomPrice)
+	formData.append("photo", roomData.photo)
+	const response = await api.put(`/rooms/update/${roomId}`, formData)
+	return response;
+}
 
    /*This function gets a Room by Id */
 
