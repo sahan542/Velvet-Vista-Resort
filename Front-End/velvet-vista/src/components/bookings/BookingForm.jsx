@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { bookRoom, getRoomById } from '../utils/ApiFunctions'
 import { useNavigate, useParams } from 'react-router-dom'
 import moment from "moment"
+import { Form, FormControl } from 'react-bootstrap'
+import { type } from './../../../node_modules/moment/moment.d';
 
 const BookingForm = () => {
 
@@ -100,7 +102,48 @@ const BookingForm = () => {
     }
 
   return (
-    <div>BookingForm</div>
+    <>
+        <div className="container mb-5">
+            <div className="row">
+                <div className="col-md-6">
+                    <div className="card card-body mt-5">
+                        <h4 className="card card-title">Reserve Room</h4>
+                        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                            <Form.Group>
+                                <Form.Label htmlFor="guestName"> 
+                                    Full Name : 
+                                </Form.Label>
+                                <FormControl required type="text" id="guestName" name="guestName" value={booking.guestName} placeholder="Enter your Full Name" onChange={handleInputChange} />
+                                <Form.Control.Feedback type="invalid">
+                                    Please Enter your Full Name
+                                </Form.Control.Feedback>
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label htmlFor="guestEmail"> 
+                                    Email : 
+                                </Form.Label>
+                                <FormControl required type="email" id="guestEmail" name="guestEmail" value={booking.guestEmail} placeholder="Enter your Email" onChange={handleInputChange} />
+                                <Form.Control.Feedback type="invalid">
+                                    Please Enter your Email Address
+                                </Form.Control.Feedback>
+                            </Form.Group>
+
+                            <fieldset style={{border: "2px"}}>
+                                <legend>Lodging Period</legend>
+                                <div className="row">
+                                    <div className="col-6">
+
+                                        
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </Form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </>
   )
 
 }
