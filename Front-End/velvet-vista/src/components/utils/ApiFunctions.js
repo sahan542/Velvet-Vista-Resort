@@ -87,22 +87,21 @@ export async function getAllRooms() {
         throw new Error(`Error fetching room ${error.message}`)
     }
   }
+  
 
-  /*This function saves new booking */
-  export async function bookRoom(roomId, booking){
-    try{
-        const response = await api.post(`/bookings/room/${roomId}/booking`, booking)
-        return response.data
-    }
-    catch(error){
-        if(error.response && error.response.data){
-            throw new Error(error.response.data)
-        }
-        else{
-            throw new Error(`Error booking room : ${error.message}`)
-        }
-    }
-  }
+/* This function saves a new booking to the databse */
+export async function bookRoom(roomId, booking) {
+	try {
+		const response = await api.post(`/bookings/room/${roomId}/booking`, booking)
+		return response.data
+	} catch (error) {
+		if (error.response && error.response.data) {
+			throw new Error(error.response.data)
+		} else {
+			throw new Error(`Error booking room : ${error.message}`)
+		}
+	}
+}
 
   /* This function uses to get All bookings from database*/
   export async function getAllBookings(){
