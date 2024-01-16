@@ -41,7 +41,7 @@ public class BookingController {
     public ResponseEntity<?> getBookingByConfirmationCode(@PathVariable String confirmationCode){
         try{
             BookedRoom booking = bookingService.findByBookingConfirmationCode(confirmationCode);
-            BookingResponse bookingResponse =getBookingResponse(booking);
+            BookingResponse bookingResponse = getBookingResponse(booking);
             return ResponseEntity.ok(bookingResponse);
         }
         catch(ResourceNotFoundException ex){
