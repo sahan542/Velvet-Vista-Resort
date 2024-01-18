@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import RoomCard from '../room/RoomCard'
 import RoomPaginator from './RoomPaginator'
-import { Button } from 'react-bootstrap'
+import { Button , Row} from 'react-bootstrap'
 
 const RoomSearchResult = ({results, onClearSearch}) => {
     const [currentPage, setCurrentPage] = useState(1)

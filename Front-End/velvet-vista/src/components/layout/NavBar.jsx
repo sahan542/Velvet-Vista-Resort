@@ -5,6 +5,7 @@ import { NavLink, Link } from "react-router-dom"
 
 const NavBar = () => {
 
+
 	return (
 		<nav className="navbar navbar-expand-lg bg-body-tertiary px-5 shadow mt-5 sticky-top">
 			<div className="container-fluid">
@@ -50,7 +51,7 @@ const NavBar = () => {
 								href="#"
 								role="button"
 								data-bs-toggle="dropdown"
-								aria-expanded="false">
+								aria-expanded="false">										
 								
 								
 								Account

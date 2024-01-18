@@ -146,5 +146,13 @@ export async function bookRoom(roomId, booking) {
     }
   }
 
+  /*  Gets all available rooms from database with a given date & room type */
+  export async function getAvailableRooms(checkInDate, checkOutDate, roomType){
+    const result = await api.get(`rooms/available-rooms?
+                                        checkInDate=${checkInDate}
+                                        &checkOutDate=${checkOutDate}
+                                        &roomType=${roomType}`)
+        return result
+  }
 
 
