@@ -1,14 +1,18 @@
 package com.VelvetVista.VelvetVista_Resort.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Role {
 
     @Id
@@ -17,6 +21,10 @@ public class Role {
     private String name;
     @ManyToMany(mappedBy = "roles")
     private Collection<User> users = new HashSet<>();
+
+    public Role(String name) {
+        this.name = name;
+    }
 
     public void assignRoleToUser(User user){
         user.getRoles().add(this);
