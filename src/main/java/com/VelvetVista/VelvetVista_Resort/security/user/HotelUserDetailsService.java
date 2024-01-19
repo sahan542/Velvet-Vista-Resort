@@ -1,5 +1,23 @@
 package com.VelvetVista.VelvetVista_Resort.security.user;
 
-public class HotelUserDetailsService {
-    
+import com.VelvetVista.VelvetVista_Resort.model.User;
+import com.VelvetVista.VelvetVista_Resort.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+
+@Service
+@RequiredArgsConstructor
+public class HotelUserDetailsService implements UserDetailsService {
+    private final UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not Found"));
+        return HotelUserDetails.buildUserDetails(user);
+    }
 }
