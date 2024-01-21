@@ -58,12 +58,9 @@ public class RoleService implements IRoleService{
         throw new UsernameNotFoundException("User not found");
     }
 
-    @Override
-    public User assignRoleToUser(Long userId, Long roleId) {
-        return null;
-    }
 
-    /*
+
+
         @Override
         public User assignRoleToUser(Long userId, Long roleId) {
             Optional<User> user = userRepository.findById(userId);
@@ -78,7 +75,7 @@ public class RoleService implements IRoleService{
             }
             return user.get();
         }
-    */
+
     @Override
     public Role removeAllUsersFromRole(Long roleId) {
         Optional<Role> role = roleRepository.findById(roleId);
