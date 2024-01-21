@@ -8,13 +8,11 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static java.util.stream.Nodes.collect;
+
 
 @Getter
 @Setter
@@ -22,26 +20,28 @@ import static java.util.stream.Nodes.collect;
 @NoArgsConstructor
 public class HotelUserDetails implements UserDetails {
     private Long id;
-    private String email;
+    private  String email;
     private String password;
-
     private Collection<GrantedAuthority> authorities;
 
-    @
     public static HotelUserDetails buildUserDetails(User user){
         List<GrantedAuthority> authorities = user.getRoles()
-                .stream().map(role -> new SimpleGrantedAuthority(role.getName())) Stream<SimpleGrantedAuthority>
+                .stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toList());
         return new HotelUserDetails(
                 user.getId(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities
-        );
+                authorities);
+
     }
+
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
@@ -71,6 +71,6 @@ public class HotelUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

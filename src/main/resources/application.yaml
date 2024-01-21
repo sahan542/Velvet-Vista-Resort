@@ -19,11 +19,19 @@ spring:
       file-size-threshold: 2KB
 
 
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
-  logging.level.org.hibernate.SQL=DEBUG
-  logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
-  
-  #App Properties
-  
-  security.jwt.secret=3600000
-  security.jwt.expirationTime=36763979244226452948404D635166546A576D5A7134743777217A25432A462D
+# App Properties
+
+security:
+  jwt:
+    secret: "3600000"
+    expirationTime: "36763979244226452948404D635166546A576D5A7134743777217A25432A462D"
+
+auth:
+  token:
+    jwtSecret: ubxIrJFCgUGa/JwuidB9haoB229kxoaMYTcaiKd0wfQ=
+    expirationInMils: 3600000
