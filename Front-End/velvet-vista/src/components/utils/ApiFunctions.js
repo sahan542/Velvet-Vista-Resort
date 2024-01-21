@@ -7,6 +7,14 @@ export const api = axios.create({
     },
 });
 
+export const getHeader = () =>{
+    const token = localStorage.getItem("token")
+    return {
+        Authorization : `Bearer ${token}`,
+        "Content-Type" : "application/json"
+    }
+}
+
 // Define the endpoint for adding a new room
 const endpoint = '/rooms/add/new-room';
 
@@ -155,4 +163,51 @@ export async function bookRoom(roomId, booking) {
         return result
   }
 
+
+  export async function registerUser(registration){
+    try{
+        const response = await api.post("/auth/register-user", registration)
+        return response.data
+    } 
+    catch(error){
+        if(error.response && error.response.data){
+            throw new Error(error.response.data)
+        }
+        else{
+            throw new Error(`User Registration Error : ${error.message}`)
+        }
+    }
+  }
+
+
+  /*Login User*/
+  export async function loginUser(login){
+    try{
+        const response = await api.post("/auth/login", login)
+        if(response.status >= 200 && response.status < 300){
+            return response.data
+        }
+        else{
+            return null
+        }
+    }
+    catch(error){
+        console.error(error)
+        return null
+    }
+
+  }
+
+  export async function getUserProfile(userId, token){
+    try{
+        const response = await api.get(`users/profile/${userId}`,{
+        headers : getHeader()
+    })
+    return response.data
+    }
+    catch(error){
+        throw error
+
+    }
+  }
 
