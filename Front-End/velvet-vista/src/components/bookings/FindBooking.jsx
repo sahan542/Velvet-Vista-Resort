@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { cancelBooking, getBookingsByConfirmationCode } from '../utils/ApiFunctions'
+import { cancelBooking } from '../utils/ApiFunctions'
 
 const FindBooking = () => {
     const [confirmationCode, setConfirmationCode] = useState("")
