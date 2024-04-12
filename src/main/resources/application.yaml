@@ -28,10 +28,5 @@ logging:
 
 security:
   jwt:
-    secret: "3600000"
-    expirationTime: "36763979244226452948404D635166546A576D5A7134743777217A25432A462D"
-
-auth:
-  token:
-    jwtSecret: ubxIrJFCgUGa/JwuidB9haoB229kxoaMYTcaiKd0wfQ=
-    expirationInMils: 3600000
+    secret: f5lgzWgdYoq+uNpP1Ix0mt7duSv2LsRd0wGXLyLy32M=
+    expirationTime: 3600000 # 1 hour in milliseconds

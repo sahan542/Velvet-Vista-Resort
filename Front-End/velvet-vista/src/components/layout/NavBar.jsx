@@ -1,10 +1,12 @@
 import React, { useContext, useState } from "react"
 import { NavLink, Link } from "react-router-dom"
 import Logout from "../auth/Logout"
+import { AuthContext } from "../auth/AuthProvider"
 
 
 const NavBar = () => {
 	const [showAccount, setShowAccount] = useState(false)
+	const { user } = useContext(AuthContext)
 
 	const handleAccountClick = () => {
 		setShowAccount(!showAccount)
@@ -34,7 +36,7 @@ const NavBar = () => {
 				<div className="collapse navbar-collapse" id="navbarScroll">
 					<ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
 						<li className="nav-item">
-							<NavLink className="nav-link" aria-current="page" to={"/browse-all-rooms"}>
+							<NavLink className="nav-link" aria-current="page" to={"/browse-all-tiles"}>
 								Browse all rooms
 							</NavLink>
 						</li>
