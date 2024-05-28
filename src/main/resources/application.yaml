@@ -5,19 +5,18 @@ spring:
     password: Asdf@1999
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-
-  #JPA Settings
+  # JPA Settings
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
       format_sql: true
-    servlet:
-      multipart:
+
+  servlet:
+    multipart:
       max-file-size: 5MB
       max-request-size: 5MB
       file-size-threshold: 2KB
-
 
 logging:
   level:
@@ -25,8 +24,8 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
 # App Properties
-
 security:
   jwt:
     secret: f5lgzWgdYoq+uNpP1Ix0mt7duSv2LsRd0wGXLyLy32M=
     expirationTime: 3600000 # 1 hour in milliseconds
+

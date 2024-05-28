@@ -21,10 +21,15 @@ import java.util.List;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("${auth.token.jwtSecret}")
+   // @Value("${auth.token.jwtSecret}")
+ //   private String jwtSecret;
+
+//    @Value("${auth.token.expirationInMils}")
+ //   private int jwtExpirationMs;
+    @Value("${security.jwt.secret}")
     private String jwtSecret;
 
-    @Value("${auth.token.expirationInMils}")
+    @Value("${security.jwt.expirationTime}")
     private int jwtExpirationMs;
 
     public String generateJwtTokenForUser(Authentication authentication){
