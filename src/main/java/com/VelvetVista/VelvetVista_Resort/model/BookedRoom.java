@@ -2,7 +2,6 @@ package com.VelvetVista.VelvetVista_Resort.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 
 @Entity
