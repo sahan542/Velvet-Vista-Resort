@@ -37,7 +37,7 @@ public class RoomController {
     private final BookingService bookingService;
 
     @PostMapping("/add/new-room")
-    @PreAuthorize("hasRole('ROLE_ADMIN")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<RoomResponse> addNewRoom(
             @RequestParam("photo") MultipartFile photo,
             @RequestParam("roomType") String roomType,
@@ -80,6 +80,7 @@ public class RoomController {
     }
 
     @PutMapping("/update/{roomId}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<RoomResponse> updateRoom(@PathVariable Long roomId,
             @RequestParam(required = false) String roomType,
             @RequestParam(required = false) BigDecimal roomPrice,
@@ -128,6 +129,9 @@ public class RoomController {
 
     private RoomResponse getRoomResponse(Room room) {
         List<BookedRoom> bookings = getAllBookingsByRoomId(room.getId());
+        if(bookings == null){
+            bookings = new ArrayList<>();
+        }
         List<BookingResponse> bookingInfo = bookings
                 .stream()
                 .map(booking -> new BookingResponse(
@@ -137,12 +141,13 @@ public class RoomController {
                         booking.getBookingConfirmationCode()))
                 .toList();
         byte[] photoBytes = null;
-        Blob photoBlob = room.getPhoto();
-        if (photoBlob != null) {
+        if (room.getPhoto() != null){
+            Blob photoBlob = room.getPhoto();
             try {
                 photoBytes = photoBlob.getBytes(1, (int) photoBlob.length());
             } catch (SQLException e) {
                 throw new PhotoRetrievalException("Error Retrieving Photo");
+               // throw new PhotoRetrievalException("Error Retrieving Photo", e);
             }
         }
         // List<BookingResponse> bookingInfo; if this not work.please remove this.

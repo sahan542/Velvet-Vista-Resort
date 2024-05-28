@@ -2,6 +2,7 @@ package com.VelvetVista.VelvetVista_Resort.controller;
 
 import com.VelvetVista.VelvetVista_Resort.exception.UserAlreadyExistsException;
 import com.VelvetVista.VelvetVista_Resort.model.User;
+import com.VelvetVista.VelvetVista_Resort.model.Role;
 import com.VelvetVista.VelvetVista_Resort.request.LoginRequest;
 import com.VelvetVista.VelvetVista_Resort.response.JwtResponse;
 import com.VelvetVista.VelvetVista_Resort.security.jwt.JwtUtils;
@@ -27,8 +28,8 @@ import java.util.stream.Collectors;
 
 
 @RestController
-@RequestMapping("/auth")
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
     private final IUserService userService;
     private final AuthenticationManager authenticationManager;
@@ -38,7 +39,7 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@RequestBody User user){
         try{
             userService.registerUser(user);
-            return ResponseEntity.ok("Registration successful!");
+            return ResponseEntity.ok("Registration-successful!");
 
         }catch (UserAlreadyExistsException e){
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
