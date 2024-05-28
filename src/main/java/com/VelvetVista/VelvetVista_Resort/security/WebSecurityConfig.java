@@ -39,6 +39,7 @@ public class WebSecurityConfig {
     public DaoAuthenticationProvider authenticationProvider(){
         var authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
 
@@ -48,11 +49,11 @@ public class WebSecurityConfig {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer :: disable)
+        http.csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers("/auth/**", "/rooms/**")
+                                                .requestMatchers("/auth/**", "/tiles/**", "/rooms/**", "/bookings/**")
                                                 .permitAll().requestMatchers("/roles/**").hasRole("ADMIN")
                                                 .anyRequest().authenticated());
 
