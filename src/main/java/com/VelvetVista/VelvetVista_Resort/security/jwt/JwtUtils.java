@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -36,7 +37,7 @@ public class JwtUtils {
         HotelUserDetails userPrincipal = (HotelUserDetails) authentication.getPrincipal();
         List<String> roles = userPrincipal.getAuthorities()
                 .stream()
-                .map(GrantedAuthority::getAuthority).toList();
+                .map(GrantedAuthority::getAuthority).collect(Collectors.toList());
         return Jwts.builder()
                 .setSubject(userPrincipal.getUsername())
                 .claim("roles", roles)
