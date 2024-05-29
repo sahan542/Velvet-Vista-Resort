@@ -12,10 +12,15 @@ import java.util.List;
 
 
 @Service
-@RequiredArgsConstructor
 public class BookingService implements IBookingService {
     private final BookingRepository bookingRepository;
     private final IRoomService roomService;
+
+    //this was added as the constructors of above you can remove it
+    public BookingService(BookingRepository bookingRepository, IRoomService roomService){
+        this.bookingRepository = bookingRepository;
+        this.roomService = roomService;
+    }
 
 
     @Override

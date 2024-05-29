@@ -18,6 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RoleService implements IRoleService{
     private final RoleRepository roleRepository;
+    private final IUserService userService;
     private final UserRepository userRepository;
 
     @Override
