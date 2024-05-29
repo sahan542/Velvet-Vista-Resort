@@ -12,74 +12,68 @@ const Profile = () => {
 		roles: [{ id: "", name: "" }]
 	})
 
-	const [bookings, setBookings] = useState([
-		{
-			id: "",
-			room: { id: "", roomType: "" },
-			checkInDate: "",
-			checkOutDate: "",
-			bookingConfirmationCode: ""
-		}
-	])
-	const [message, setMessage] = useState("")
-	const [errorMessage, setErrorMessage] = useState("")
-	const navigate = useNavigate()
-
-	const userId = localStorage.getItem("userId")
-	const token = localStorage.getItem("token")
+	const [bookings, setBookings] = useState([]);
+	const [message, setMessage] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
+	const navigate = useNavigate();
+	const email = localStorage.getItem("email");
+	const userId = localStorage.getItem("userId");
+	const token = localStorage.getItem("token");
 
 	useEffect(() => {
 		const fetchUser = async () => {
 			try {
-				const userData = await getUser(userId, token)
-				setUser(userData)
+				const userData = await getUser(userId, token);
+				setUser(userData);
+				localStorage.setItem('email', userData.email);
 			} catch (error) {
 				console.error(error)
 			}
 		}
 
-		fetchUser()
-	}, [token, userId])
+		fetchUser();
+	}, [userId])
 
 	useEffect(() => {
 		const fetchBookings = async () => {
 			try {
-				const response = await getBookingsByUserId(userId, token)
-				setBookings(response)
+				const response = await getBookingsByUserId(email);
+				setBookings(response);
 			} catch (error) {
-				console.error("Error fetching bookings:", error.message)
-				setErrorMessage(error.message)
+				console.error("Error fetching bookings:", error.message);
+				setErrorMessage(error.message);
 			}
-		}
+		};
 
-		fetchBookings()
-	}, [token, userId])
+		fetchBookings();
+	}, [email]);
 
 	const handleDeleteAccount = async () => {
 		const confirmed = window.confirm(
 			"Are you sure you want to delete your account? This action cannot be undone."
-		)
+		);
 		if (confirmed) {
-			await deleteUser(userId)
-				.then((response) => {
-					setMessage(response.data)
+			try {
+				await deleteUser(userId);
+					setMessage('Account deleted successfully.')
 					localStorage.removeItem("token")
 					localStorage.removeItem("userId")
 					localStorage.removeItem("userRole")
 					navigate("/")
 					window.location.reload()
-				})
-				.catch((error) => {
+
+				}
+			catch(error){
 					setErrorMessage(error.data)
-				})
+				}
 		}
-	}
+	};
 
 	return (
 		<div className="container">
 			{errorMessage && <p className="text-danger">{errorMessage}</p>}
 			{message && <p className="text-danger">{message}</p>}
-			{user ? (
+			{user.id ? (
 				<div className="card p-5 mt-5" style={{ backgroundColor: "whitesmoke" }}>
 					<h4 className="card-title text-center">User Information</h4>
 					<div className="card-body">

@@ -18,6 +18,7 @@ const Registration = () => {
 
     const handleRegistration = async(e)=>{
         e.preventDefault()
+        console.log(registration)
         try{
             const result = await registerUser(registration)
             setSuccessMessage(result)
@@ -115,7 +116,7 @@ const Registration = () => {
                     className="btn btn-hotel"
                     style={{marginRight : "10px"}}
                     >
-                        Login
+                        Register
                 </button>
                 <span style={{marginLeft : "10px"}}>
                         Already have an account ?<Link to={"/login"}></Link>
