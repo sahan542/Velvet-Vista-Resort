@@ -1,31 +1,34 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { loginUser } from "../utils/ApiFunctions"
-import { Link, useLocation, useNavigate } from "react-router-dom"
-import { useAuth } from "./AuthProvider"
+import { Link, useNavigate } from "react-router-dom"
+import { AuthContext } from "./AuthProvider"
 
 const Login = () => {
 	const [errorMessage, setErrorMessage] = useState("")
 	const [login, setLogin] = useState({
 		email: "",
 		password: ""
-	})
+	});
 
 	const navigate = useNavigate()
-	const auth = useAuth()
-	const location = useLocation()
-	const redirectUrl = location.state?.path || "/"
+	const { handleLogin } = useContext(AuthContext)
 
 	const handleInputChange = (e) => {
 		setLogin({ ...login, [e.target.name]: e.target.value })
 	}
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = async(e) => {
 		e.preventDefault()
 		const success = await loginUser(login)
 		if (success) {
 			const token = success.token
-			auth.handleLogin(token)
-			navigate(redirectUrl, { replace: true })
+			const userRole = success.roles 
+			localStorage.setItem("userRole", userRole)
+
+			handleLogin(token)
+			navigate("/profile")
+
+			//window.location.reload
 		} else {
 			setErrorMessage("Invalid username or password. Please try again.")
 		}
@@ -72,7 +75,7 @@ const Login = () => {
 				</div>
 
 				<div className="mb-3">
-					<button type="submit" className="btn btn-hotel" style={{ marginRight: "10px" }}>
+					<button onSubmit={handleSubmit} type="submit" className="btn btn-hotel" style={{ marginRight: "10px" }}>
 						Login
 					</button>
 					<span style={{ marginLeft: "10px" }}>
